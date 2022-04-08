@@ -8,10 +8,13 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
+    @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var celsiusLabel: UILabel!
     @IBOutlet weak var fahrenheitLabel: UILabel!
     @IBOutlet weak var kelvinLabel: UILabel!
+    @IBOutlet weak var symbolOfTemperature: UILabel!
+    
+    
     @IBOutlet weak var slider: UISlider! {
         didSet {
             slider.minimumValue = 0
@@ -21,12 +24,33 @@ class ViewController: UIViewController {
     }
 
     @IBAction func sliderChanged(_ sender: UISlider) {
-        let temperatureCelsius = Int(round(sender.value))
+        let senderValue = Int(round(sender.value))
+        let temperatureCelsius = senderValue
         celsiusLabel.text = "\(temperatureCelsius)ºC"
-        let temperatureFahrenheit = Int(round((sender.value * 9 / 5) + 32))
+        let temperatureFahrenheit = (senderValue * 9 / 5) + 32
         fahrenheitLabel.text = "\(temperatureFahrenheit)ºF"
-        let temperatureKelvin = Int(round(sender.value + 273))
+        let temperatureKelvin = senderValue + 273
         kelvinLabel.text = "\(temperatureKelvin)ºK"
+        if senderValue <= 20 {
+            symbolOfTemperature.text = "🥶"
+            backgroundImage.image = UIImage(named: "coldest")
+        }
+        if (senderValue > 20 && senderValue <= 40) {
+            symbolOfTemperature.text = "😨"
+            backgroundImage.image = UIImage(named: "cold")
+        }
+        if (senderValue > 40 && senderValue <= 60) {
+            symbolOfTemperature.text = "🙂"
+            backgroundImage.image = UIImage(named: "normal")
+        }
+        if (senderValue > 60 && senderValue <= 80) {
+            symbolOfTemperature.text = "😤"
+            backgroundImage.image = UIImage(named: "hot")
+        }
+        if (senderValue > 80 && senderValue <= 100) {
+            symbolOfTemperature.text = "🥵"
+            backgroundImage.image = UIImage(named: "hottest")
+        }
     }
     
 }
